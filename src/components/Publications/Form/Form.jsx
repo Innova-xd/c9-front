@@ -80,7 +80,9 @@ const Form = ({ publication } = null) => {
   const [imageFiles, setImageFiles] = useState(null);
   const [labels, setLabels] = useState({
     location: publication?.location || [],
-    category: publication?{ value: publication.category.id, label: publication.category.name } : [] || [],
+    category: publication?.category 
+      ? { value: publication.category.id, label: publication.category.name }
+      : { value: null, label: "Sin categoría" }, // Asignación de "Sin categoría"
     city: publication?.location?.city || [],
   });
   const promptInput = useRef(null);
