@@ -1,26 +1,28 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { faArrowUp, faDownload } from '@fortawesome/free-solid-svg-icons';
-import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
-import { faTag } from '@fortawesome/free-solid-svg-icons';
-import bgIzq from '../../assets/images/bg-izq.png';
-import bgDer from '../../assets/images/bg-der.png';
-import { Tab, initTE } from 'tw-elements';
-import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
-import { Spinner } from '../../components/UI';
-import TextToSpeech from '../../components/TextToSpeach/TextToSpeach';
-import { Tooltip } from 'react-tippy';
-import 'react-tippy/dist/tippy.css';
-import { getElementError } from '@testing-library/react';
-import DetailDesktop from '../../components/Publications/DetailDesktop';
-import DetailMobile from '../../components/Publications/DetailMobile';
-import { Chatbox } from '../../components';
+import React, { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { faGlobeAmericas } from "@fortawesome/free-solid-svg-icons";
+import { faTag } from "@fortawesome/free-solid-svg-icons";
+import bgIzq from "../../assets/images/bg-izq.png";
+import bgDer from "../../assets/images/bg-der.png";
+import { Tab, initTE } from "tw-elements";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { Spinner } from "../../components/UI";
+import TextToSpeech from "../../components/TextToSpeach/TextToSpeach";
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
+import { getElementError } from "@testing-library/react";
+import DetailDesktop from "../../components/Publications/DetailDesktop";
+import DetailMobile from "../../components/Publications/DetailMobile";
+import { Chatbox } from "../../components";
+import { Sharedbar } from "../../components";
 
 const Publication = () => {
+  const [isSharedbarOpen, setIsSharedbarOpen] = useState(false);
   const [publication, setPublication] = useState();
   const [showButton, setShowButton] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -38,17 +40,17 @@ const Publication = () => {
   const handleScrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
   const setLocation = (location) => {
-    let locationName = '';
+    let locationName = "";
     if (
       location === null ||
       (location?.region === null && location?.city === null)
     ) {
-      locationName = 'Chile';
+      locationName = "Chile";
       return locationName;
     }
 
@@ -79,7 +81,7 @@ const Publication = () => {
     try {
       await axios.post(endpointVisit);
     } catch (error) {
-      console.error('Error al aumentar las visitas:', error);
+      console.error("Error al aumentar las visitas:", error);
     }
   };
 
@@ -96,21 +98,21 @@ const Publication = () => {
       setShowButton(isVisible);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   useEffect(() => {
-    const divContent = document.getElementById('content-text');
+    const divContent = document.getElementById("content-text");
     divContent.innerHTML = publication?.finalContent;
-    const divContentEN = document.getElementById('content-text_EN');
+    const divContentEN = document.getElementById("content-text_EN");
     divContentEN.innerHTML = publication?.finalContent_EN;
 
     if (carouselRef.current && publication) {
-      const dots = document.querySelectorAll('.control-dots .dot');
+      const dots = document.querySelectorAll(".control-dots .dot");
       dots[0].click();
     }
   }, [publication, windowWidth]);
@@ -123,9 +125,9 @@ const Publication = () => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -133,28 +135,35 @@ const Publication = () => {
 
   function changeMetaTags(publication) {
     const imgTagTwitter = document
-      .getElementById('meta-tag-img-twitter')
-      .setAttribute('content', publication?.images[0]?.url);
+      .getElementById("meta-tag-img-twitter")
+      .setAttribute("content", publication?.images[0]?.url);
     const imgTagFace = document
-      .getElementById('meta-tag-img-face')
-      .setAttribute('content', publication?.images[0]?.url);
+      .getElementById("meta-tag-img-face")
+      .setAttribute("content", publication?.images[0]?.url);
     const titleTagFace = document
-      .getElementById('meta-tittle-face')
-      .setAttribute('content', publication?.name);
+      .getElementById("meta-tittle-face")
+      .setAttribute("content", publication?.name);
     const titleTagtitter = document
-      .getElementById('meta-tittle-twitter')
-      .setAttribute('content', publication?.name);
+      .getElementById("meta-tittle-twitter")
+      .setAttribute("content", publication?.name);
   }
 
   return (
     <>
-      <Chatbox publicationContent={publication?.finalContent} />
-      <div className={loading ? '' : 'hidden'}>
+      {!isSharedbarOpen && (
+        <Chatbox publicationContent={publication?.finalContent} />
+      )}
+      <Sharedbar
+        description="Innova XD"
+        isOpen={isSharedbarOpen}
+        setIsOpen={setIsSharedbarOpen}
+      />
+      <div className={loading ? "" : "hidden"}>
         <div className="w-full h-[20vh] sm:h-[60vh] flex justify-center items-center">
           <Spinner />
         </div>
       </div>
-      <div id="pdf" className={loading ? 'hidden' : ''}>
+      <div id="pdf" className={loading ? "hidden" : ""}>
         <div className="pb-5 pt-10 px-3 md:px-12 lg:px-40 2xl:px-96">
           <Link to="/">
             <button
@@ -222,7 +231,7 @@ const Publication = () => {
                 <FontAwesomeIcon icon={faTag} className="pe-2 text-gray-500 " />
                 {publication?.category?.name
                   ? publication.category.name
-                  : 'Sin categoría'}
+                  : "Sin categoría"}
               </a>
             </div>
           </div>
@@ -313,7 +322,7 @@ const Publication = () => {
                     <div className="p-2">{item.question}</div>
                     <svg
                       className={`w-5 h-5 transition-transform ${
-                        activeIndex === index ? 'transform rotate-180' : ''
+                        activeIndex === index ? "transform rotate-180" : ""
                       }`}
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
