@@ -37,8 +37,7 @@ const Sharedbar = ({ description, isOpen, setIsOpen }) => {
             {/* Reemplaza el enlace de Facebook por FacebookShareButton */}
             <FacebookShareButton
               url={url}
-              quote="InnovaXD"
-              hashtag={url}
+              hashtag="#InnovaXD"
               className="text-2xl"
             >
               <FontAwesomeIcon icon={faFacebookF} className="p-1 rounded-full bg-blue-500 text-white w-10 h-10 flex items-center justify-center shadow-md hover:opacity-75" />
