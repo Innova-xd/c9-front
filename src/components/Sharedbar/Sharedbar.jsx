@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { FacebookShareButton } from 'react-share'; // Importa FacebookShareButton
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faShareAlt, faClose } from '@fortawesome/free-solid-svg-icons';
@@ -33,15 +34,17 @@ const Sharedbar = ({ description, isOpen, setIsOpen }) => {
 
         {isOpen && (
           <div className="flex flex-col space-y-1">
-            {/* Social Media Links */}
-            <a
-              href={`https://www.facebook.com/dialog/share?app_&href=${url}&display=popup`}
-              target="_blank"
-              rel="noreferrer"
-              className="p-1 rounded-full bg-blue-500 text-white w-12 h-12 flex items-center justify-center shadow-md hover:opacity-75"
+            {/* Reemplaza el enlace de Facebook por FacebookShareButton */}
+            <FacebookShareButton
+              url={url}
+              quote="InnovaXD"
+              hashtag={url}
+              className="text-2xl"
             >
-              <FontAwesomeIcon icon={faFacebookF} className="text-3xl" />
-            </a>
+              <FontAwesomeIcon icon={faFacebookF} className="p-1 rounded-full bg-blue-500 text-white w-10 h-10 flex items-center justify-center shadow-md hover:opacity-75" />
+            </FacebookShareButton>
+            
+            {/* Conserva los demás botones como están */}
             <a
               href={`mailto:?&subject=Tienes que ver esto!&cc=&bcc=&body=Tienes que ver esto ${url}%0D%0A%0D%0A${encodeURI(
                 description
