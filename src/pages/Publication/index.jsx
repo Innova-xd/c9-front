@@ -215,7 +215,7 @@ const Publication = () => {
 
             <div data-html2canvas-ignore="true" className="flex gap-1 mr-4">
               <a
-                href="/"
+                href={`/publications/region/${publication?.location?.region.id}`}
                 className="inline-block whitespace-nowrap rounded-full bg-neutral-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.7em] md:text-[0.85em] font-bold leading-none text-warning-800 hover:shadow-lg ease-in-out hover:scale-110"
               >
                 <FontAwesomeIcon
