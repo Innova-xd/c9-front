@@ -27,6 +27,7 @@ import ByKeyword from "../pages/ByKeyword/byKeyword";
 import { useLoading } from "../context/LoadingContext";
 import EditUserView from "../pages/Admin/EditUser";
 import Category from '../pages/Categories/Category'
+import Region from "../pages/Region/Region";
 
 const AppRoutes = () => {
   const { isLoading, setIsLoading } = useLoading(); // Usamos el contexto para acceder a isLoading
@@ -258,6 +259,15 @@ const AppRoutes = () => {
         element={
           <Layout>
             <Category />
+          </Layout>
+        }
+      />
+      <Route
+        exact
+        path="/publications/region/:regionId"
+        element={
+          <Layout>
+            <Region />
           </Layout>
         }
       />
