@@ -171,7 +171,7 @@ const Admin = () => {
             <div>
               <h2
                 className="text-4xl md:text-5xl lg:text-4xl 2xl:text-5xl mt-8 font-bold text-center 
-            text-primary font-['Caveat_Brush'] leading-3 tracking-widest font-normal uppercase"
+            text-primary font-['Caveat_Brush'] leading-3 tracking-widest uppercase"
               >
                 Bienvenido!
               </h2>
