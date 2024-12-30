@@ -210,6 +210,15 @@ const Form = ({ publication } = null) => {
   const handleSave = async (event, isPublished = false) => {
     event.preventDefault();
 
+    // Verificar si el tab está deshabilitado
+    if (finalContent_en.length < 15) {
+      toast('Debe generar la traducción a Inglés para poder continuar.', {
+        type: 'error',
+        autoClose: 3000,
+      });
+      return;
+    }
+
     const title = titleInput.current.value;
     const slug = slugInput.current.value;
     const initialContent = originalText;
