@@ -210,6 +210,15 @@ const Form = ({ publication } = null) => {
   const handleSave = async (event, isPublished = false) => {
     event.preventDefault();
 
+    // Verificar si el tab está deshabilitado
+    if (finalContent_en.length < 15) {
+      toast('Debe generar la traducción a Inglés para poder continuar.', {
+        type: 'error',
+        autoClose: 3000,
+      });
+      return;
+    }
+
     const title = titleInput.current.value;
     const slug = slugInput.current.value;
     const initialContent = originalText;
@@ -559,7 +568,7 @@ const Form = ({ publication } = null) => {
         model: 'gpt-4-0125-preview',
         temperature: 0,
         n: 1,
-        message: `Traduce en ingles el siguiente texto manteniendo las etiquetas HTML, estilos, emojis y saltos de lineas, eliminando ''' dentro del texto. Texto: '''${translatedText}'''`,
+        message: `Traduce en ingles el siguiente texto delmitado por ''' ''' (estas comillas no deben aparecer en la traducción) manteniendo las etiquetas HTML, estilos, emojis y saltos de lineas. Texto: '''${translatedText}'''`,
       }),
     };
 
