@@ -52,7 +52,6 @@ const Chatbox = ({ publicationContent = '' }) => {
 
   const messagesOptions = [
     '¿ Qué tipo de ayuda me puedes ofrecer ?',
-    '¿ Puedes listar 5 palabras graves y 5 agudas si las hay ?',
     'Dame los puntos claves de la noticia'
   ];
 
